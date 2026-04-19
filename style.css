@@ -1,66 +1,234 @@
-body {
+
+:root {
+    --primary-teal: #21D3F0;
+    --primary-teal-dark: #19AFCA;
+    --bg-light: #EBF7F9; /* Closest to image background color */
+    --card-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    --option-selected-border: #21D3F0;
+    --option-selected-bg: #D4F9FD;
+    --btn-primary-bg: #1B789D; /* Custom color for primary buttons */
+    --btn-primary-hover: #156281;
+}
+
+
+* {
     margin: 0;
-    font-family: Arial;
-    background: #0f172a;
-    color: white;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* NAVBAR */
-nav {
-    background: #1e293b;
-    padding: 15px;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+
+.main-container {
+    width: 100vw;
+    height: 100vh;
+    
+    background-image: url('quiz.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-}
-
-nav button {
-    margin-left: 10px;
-}
-
-/* CONTAINER */
-.container {
+    position: relative;
     padding: 20px;
 }
 
-/* INPUT */
-input {
-    padding: 8px;
-    margin: 5px;
-    border-radius: 5px;
-    border: none;
+
+.main-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
 }
 
-/* BUTTON */
-button {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    background: #22c55e;
-    color: white;
+
+.quiz-card {
+    background-color: white;
+    width: 100%;
+    max-width: 700px; 
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: var(--card-shadow);
+    z-index: 2;
+    text-align: center;
+}
+
+
+.quiz-meta {
+    display: flex;
+    justify-content: center; 
+    margin-bottom: 25px;
+    font-size: 14px;
+    color: #888;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+
+#playArea h1 {
+    font-size: 24px;
+    margin-bottom: 25px;
+    line-height: 1.4;
+    color: #444;
+}
+
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+
+.option-btn {
+    text-align: left;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 18px 25px;
+    border-radius: 8px;
+    font-size: 16px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
 }
 
-button:hover {
-    background: #16a34a;
+.option-btn:hover {
+    border-color: #aaa;
+    background-color: #f9f9f9;
 }
 
-/* CARD */
-.card {
-    background: #1e293b;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 10px;
+
+.option-btn.selected {
+    border: 2px solid var(--option-selected-border);
+    background-color: var(--option-selected-bg);
+    color: #333;
 }
 
-/* HIDDEN */
-.hidden {
-    display: none;
+
+.actions {
+    display: flex;
+    justify-content: flex-end; 
+    gap: 15px;
 }
 
-/* RESPONSIVE */
-@media (max-width: 600px) {
-    nav {
-        flex-direction: column;
-    }
+.nav-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.nav-btn.prev {
+    background-color: #f1f1f1;
+    color: #333;
+}
+.nav-btn.prev:hover { background-color: #e1e1e1; }
+
+.nav-btn.next {
+    background-color: var(--btn-primary-bg);
+    color: white;
+}
+.nav-btn.next:hover { background-color: var(--btn-primary-hover); }
+
+#homeArea {
+    padding: 20px;
+}
+
+.welcome-msg {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.desc-msg {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.home-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.home-btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    flex: 1;
+    max-width: 200px;
+}
+
+.home-btn.create {
+    background-color: var(--primary-teal);
+    color: white;
+}
+.home-btn.create:hover { background-color: var(--primary-teal-dark); }
+
+.home-btn.take {
+    background-color: #ddd;
+    color: #333;
+}
+.home-btn.take:hover { background-color: #ccc; }
+
+.site-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0,0,0,0.8); 
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2; 
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.auth-btn {
+    background-color: #ddd;
+    color: #333;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+
+.hidden { display: none !important; }
+
+
+@media (max-width: 768px) {
+    .quiz-card { padding: 20px; }
+    #playArea h1 { font-size: 20px; }
+    .option-btn { font-size: 14px; padding: 15px 20px; }
+    .home-actions { flex-direction: column; gap: 10px; }
+    .home-btn { max-width: 100%; }
+    .actions { justify-content: space-between; }
+    .nav-btn.prev { order: 1; }
+    .nav-btn.next { order: 2; flex: 1; text-align: center; }
 }

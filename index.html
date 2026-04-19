@@ -1,125 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Job Board</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Quiz Maker Platform</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<nav>
-    <h2>Job Board</h2>
-    <div>
-        <button onclick="showPage('home')">Home</button>
-        <button onclick="showPage('jobs')">Jobs</button>
-        <button onclick="showPage('employer')">Employer</button>
-        <button onclick="showPage('candidate')">Candidate</button>
+    <div class="main-container">
+        
+        <div class="quiz-card">
+            
+            <div class="quiz-meta">
+                <p id="progress">QUESTION 1/10</p>
+                <p id="timer" class="hidden">00:30</p> 
+            </div>
+
+            <div id="playArea" class="hidden">
+                <h1 id="questionText">Welcome to the Online Quiz Maker Platform!</h1>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="selectOption(0)">A. 3 times or more per week</button>
+                    <button class="option-btn selected" onclick="selectOption(1)">B. 1 or 2 times per week</button>
+                    <button class="option-btn" onclick="selectOption(2)">C. Less than 4 times per month</button>
+                    <button class="option-btn" onclick="selectOption(3)">D. I don't practice sport during the month</button>
+                </div>
+                <div class="actions">
+                    <button class="nav-btn prev hidden" onclick="prevQuestion()">Previous</button>
+                    <button class="nav-btn next" onclick="nextQuestion()">Next</button>
+                </div>
+            </div>
+
+            <div id="homeArea">
+                <h1 class="welcome-msg">Welcome to Online Quiz Platform!</h1>
+                <p class="desc-msg">Share and challenge knowledge.</p>
+                <div class="home-actions">
+                    <button class="home-btn create" onclick="alert('Creating Feature Ready!')">➕ Quiz Create பண்ண</button>
+                    <button class="home-btn take" onclick="startQuiz()">▶️ Quiz Attend பண்ண</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="site-footer">
+            <div class="user-info">
+                <span>Guest User</span>
+                <button class="auth-btn">Login</button>
+            </div>
+        </div>
+
     </div>
-</nav>
 
-<div class="container">
-
-<!-- HOME -->
-<div id="home">
-    <h1>Find Your Dream Job</h1>
-    <input type="text" id="search" placeholder="Search jobs...">
-    <button onclick="searchJobs()">Search</button>
-</div>
-
-<!-- JOB LIST -->
-<div id="jobs" class="hidden"></div>
-
-<!-- JOB DETAIL -->
-<div id="jobDetail" class="hidden"></div>
-
-<!-- EMPLOYER -->
-<div id="employer" class="hidden">
-    <h2>Post Job</h2>
-    <input id="title" placeholder="Job Title">
-    <input id="company" placeholder="Company">
-    <input id="location" placeholder="Location">
-    <button onclick="postJob()">Post</button>
-</div>
-
-<!-- CANDIDATE -->
-<div id="candidate" class="hidden">
-    <h2>Apply Job</h2>
-    <input id="name" placeholder="Your Name">
-    <input type="file" id="resume">
-    <button onclick="applyJob()">Apply</button>
-</div>
-
-</div>
-
-<script>
-let jobs = [
-    {id:1, title:"Frontend Developer", company:"Google", location:"Chennai"},
-    {id:2, title:"Backend Developer", company:"Amazon", location:"Bangalore"}
-];
-
-function showPage(page) {
-    document.querySelectorAll(".container > div").forEach(div => div.classList.add("hidden"));
-    document.getElementById(page).classList.remove("hidden");
-
-    if(page === "jobs") loadJobs();
-}
-
-function loadJobs(list = jobs) {
-    let html = "";
-    list.forEach(job => {
-        html += `
-        <div class="card">
-            <h3>${job.title}</h3>
-            <p>${job.company} - ${job.location}</p>
-            <button onclick="viewJob(${job.id})">View</button>
-        </div>`;
-    });
-    document.getElementById("jobs").innerHTML = html;
-}
-
-function viewJob(id) {
-    let job = jobs.find(j => j.id === id);
-    document.getElementById("jobDetail").innerHTML = `
-        <h2>${job.title}</h2>
-        <p>${job.company}</p>
-        <p>${job.location}</p>
-        <button onclick="showPage('candidate')">Apply</button>
-    `;
-    showPage("jobDetail");
-}
-
-function postJob() {
-    let title = document.getElementById("title").value;
-    let company = document.getElementById("company").value;
-    let location = document.getElementById("location").value;
-
-    if(title && company && location) {
-        jobs.push({id: jobs.length+1, title, company, location});
-        alert("Job Posted ✅");
-    } else {
-        alert("Fill all fields");
-    }
-}
-
-function applyJob() {
-    let name = document.getElementById("name").value;
-    let file = document.getElementById("resume").files[0];
-
-    if(name && file) {
-        alert("Application Submitted ✅ (Email Sent)");
-    } else {
-        alert("Fill all fields");
-    }
-}
-
-function searchJobs() {
-    let keyword = document.getElementById("search").value.toLowerCase();
-    let filtered = jobs.filter(j => j.title.toLowerCase().includes(keyword));
-    showPage("jobs");
-    loadJobs(filtered);
-}
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
