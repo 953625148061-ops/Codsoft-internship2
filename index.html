@@ -1,67 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Calculator</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Job Board</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="calculator">
-    <input type="text" id="display" readonly>
-
-    <div class="buttons">
-        <button>C</button>
-        <button>DEL</button>
-        <button>/</button>
-        <button>*</button>
-
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button>-</button>
-
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button>+</button>
-
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>=</button>
-
-        <button class="zero">0</button>
-        <button>.</button>
+<nav>
+    <h2>Job Board</h2>
+    <div>
+        <button onclick="showPage('home')">Home</button>
+        <button onclick="showPage('jobs')">Jobs</button>
+        <button onclick="showPage('employer')">Employer</button>
+        <button onclick="showPage('candidate')">Candidate</button>
     </div>
+</nav>
+
+<div class="container">
+
+<!-- HOME -->
+<div id="home">
+    <h1>Find Your Dream Job</h1>
+    <input type="text" id="search" placeholder="Search jobs...">
+    <button onclick="searchJobs()">Search</button>
+</div>
+
+<!-- JOB LIST -->
+<div id="jobs" class="hidden"></div>
+
+<!-- JOB DETAIL -->
+<div id="jobDetail" class="hidden"></div>
+
+<!-- EMPLOYER -->
+<div id="employer" class="hidden">
+    <h2>Post Job</h2>
+    <input id="title" placeholder="Job Title">
+    <input id="company" placeholder="Company">
+    <input id="location" placeholder="Location">
+    <button onclick="postJob()">Post</button>
+</div>
+
+<!-- CANDIDATE -->
+<div id="candidate" class="hidden">
+    <h2>Apply Job</h2>
+    <input id="name" placeholder="Your Name">
+    <input type="file" id="resume">
+    <button onclick="applyJob()">Apply</button>
+</div>
+
 </div>
 
 <script>
-const display = document.getElementById("display");
-const buttons = document.querySelectorAll("button");
+let jobs = [
+    {id:1, title:"Frontend Developer", company:"Google", location:"Chennai"},
+    {id:2, title:"Backend Developer", company:"Amazon", location:"Bangalore"}
+];
 
-buttons.forEach(button => {
-    button.addEventListener("click", () => {
-        let value = button.textContent;
+function showPage(page) {
+    document.querySelectorAll(".container > div").forEach(div => div.classList.add("hidden"));
+    document.getElementById(page).classList.remove("hidden");
 
-        if (value === "C") {
-            display.value = "";
-        } 
-        else if (value === "DEL") {
-            display.value = display.value.slice(0, -1);
-        } 
-        else if (value === "=") {
-            try {
-                display.value = eval(display.value);
-            } catch {
-                display.value = "Error";
-            }
-        } 
-        else {
-            display.value += value;
-        }
+    if(page === "jobs") loadJobs();
+}
+
+function loadJobs(list = jobs) {
+    let html = "";
+    list.forEach(job => {
+        html += `
+        <div class="card">
+            <h3>${job.title}</h3>
+            <p>${job.company} - ${job.location}</p>
+            <button onclick="viewJob(${job.id})">View</button>
+        </div>`;
     });
-});
+    document.getElementById("jobs").innerHTML = html;
+}
+
+function viewJob(id) {
+    let job = jobs.find(j => j.id === id);
+    document.getElementById("jobDetail").innerHTML = `
+        <h2>${job.title}</h2>
+        <p>${job.company}</p>
+        <p>${job.location}</p>
+        <button onclick="showPage('candidate')">Apply</button>
+    `;
+    showPage("jobDetail");
+}
+
+function postJob() {
+    let title = document.getElementById("title").value;
+    let company = document.getElementById("company").value;
+    let location = document.getElementById("location").value;
+
+    if(title && company && location) {
+        jobs.push({id: jobs.length+1, title, company, location});
+        alert("Job Posted ✅");
+    } else {
+        alert("Fill all fields");
+    }
+}
+
+function applyJob() {
+    let name = document.getElementById("name").value;
+    let file = document.getElementById("resume").files[0];
+
+    if(name && file) {
+        alert("Application Submitted ✅ (Email Sent)");
+    } else {
+        alert("Fill all fields");
+    }
+}
+
+function searchJobs() {
+    let keyword = document.getElementById("search").value.toLowerCase();
+    let filtered = jobs.filter(j => j.title.toLowerCase().includes(keyword));
+    showPage("jobs");
+    loadJobs(filtered);
+}
 </script>
 
 </body>
