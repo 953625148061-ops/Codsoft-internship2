@@ -1,0 +1,72 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 40px;
+    background: #222;
+    color: white;
+}
+
+nav a {
+    margin: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: #00bcd4;
+}
+
+/* Hero */
+.hero {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #555;
+    color: white;
+    padding: 60px;
+}
+
+.hero-text h1 {
+    font-size: 40px;
+}
+
+.hero button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #2196f3;
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
+
+/* About */
+.about {
+    display: flex;
+    align-items: center;
+    padding: 50px;
+    gap: 40px;
+    background: #f4f4f4;
+}
+
+.about img {
+    width: 250px;
+}
+
+.about-text h2 {
+    margin-bottom: 10px;
+}
+
+.about button {
+    padding: 10px 15px;
+    background: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
